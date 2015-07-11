@@ -63,48 +63,54 @@ count();
 
 
 //Next Problem
-/*
-  Write a function that accepts another function as it's first argument and returns a new function
-  (which invokes the original function that was passed in) that can only ever be executed once.
-
-  Once completed, add a second argument that allows the function to be invoked N number of times.
-  After the function has been called N number of times, console.log('STAHHP');
-*/
+/* Write a function that accepts another function as it's first argument and returns a new function (which invokes the original function that was passed in) that can only ever be executed once.*/
 
 var outerFunction = function(funct) {
+  var counter = 0;
   return function() {
-    funct();
-  }
-  console.log("STAHHP");
-}
-
-var add = function(num) {
-  return num + num;
-}
-outerFunction(add);
-add(4);
-
-
-
-
-
-
-var outerFunction = function(funct) {
-  var innerFunction = function(n) {
-    for (var i = 0; i < n; i++) {
-      funct();
+    if (counter < 1) {
+      counter++;
+      return funct();
+    } else {
+      return "Already invoked once";
     }
-    return innerFunction;
-  }
-  console.log("STAHHP");
-}
+  };
+};
 
-var add = function(num) {
-  return num + num;
-}
+var once = function() {
+  return "Test";
+};
 
-var show = outerFunction(add(5));
-show(3);
+var test = outerFunction(once);
+
+console.log(test());
+console.log(test());
+console.log(test());
+
+/* Once completed, add a second argument that allows the function to be invoked N number of times.
+  After the function has been called N number of times, console.log('STAHHP');*/
+
+var outerFunction = function(funct, n) {
+  var counter = 0;
+  return function() {
+    if (counter < n) {
+      counter++;
+      console.log(funct());
+    } else {
+      return console.log("STAHHP");
+    }
+  };
+};
+
+var nTimes = function() {
+  return "Show me!"
+};
+
+var runIt = outerFunction(nTimes, 3);
+runIt();
+runIt();
+runIt();
+runIt();
 
 
 
